@@ -4,4 +4,4 @@ This is a web application demonstrating hypothetical future sea level rise in th
 
 The static files and source code (HTML, JS, CSS) for this website are under `docs/`.
 
-The code used to generate elevation data from USGS is under `data-processing/`.
+The code used to generate elevation data from USGS is under `elevation-data/`.
