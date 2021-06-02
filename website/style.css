@@ -1,0 +1,30 @@
+body {
+    font-family: 'Dosis', sans-serif;
+    text-align: center;
+}
+
+#sea-level {
+    width: 600px;
+}
+
+@media screen and (min-width: 1000px) {
+    main {
+        display: flex;
+        /* align-items: center; */
+        justify-content: center;
+        flex-direction: row-reverse;
+        /* flex-wrap: wrap; */
+    }
+    #sea-level {
+        width: 300px;
+    }
+}
+
+#map {
+    margin-top: 10px;
+    margin-right: 20px;
+}
+
+/* .checkboxes {
+    text-align: left;
+} */

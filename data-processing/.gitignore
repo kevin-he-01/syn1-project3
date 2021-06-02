@@ -1,0 +1,6 @@
+# Bulky data from USGS EarthExplorer
+*.bil
+*.blw
+*.hdr
+*.prj
+srtm_*.csv
