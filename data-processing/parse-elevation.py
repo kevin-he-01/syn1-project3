@@ -40,7 +40,7 @@ for lat, long in COORDS_INCLUDED:
     longcode = ('e' if long > 0 else 'w') + str(abs(long))
     files[(lat, long)] = open('{}_{}_1arc_v3.bil'.format(latcode, longcode), 'rb')
 
-OUTPUT_FILE = '../website/elevation.dat'
+OUTPUT_FILE = '../docs/elevation.dat'
 
 try:
     def get_elevation(lat: float, long: float) -> int:
