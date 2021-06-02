@@ -74,7 +74,7 @@ function fetchElevationData() {
             console.error("Request failed");
         }
     }
-    req.open("GET", "/elevation.dat");
+    req.open("GET", "elevation.dat");
     req.send();
 }
 
