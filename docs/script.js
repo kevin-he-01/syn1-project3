@@ -20,12 +20,31 @@ function setColor(imageData, x, y, r, g, b, a) {
     imageData.data[startIndex + 3] = a;
 }
 
+PARAM_A = 0.0712526041675
+PARAM_B = 0.0200398891136
+PARAM_C = -0.132
+YEAR_START = 1969
+
+// level is in meters
+function getApproximateYear(level) {
+    // Assuming equation:
+    // level = A e^{B(x - S)} + C
+    // where S = YEAR_START
+    // input (x): Year number A.D.
+    // output (level): Sea level in meters
+    // therefore, we have x = ln((level - C) / A) / B + S
+    return Math.round(Math.log((level - PARAM_C) / PARAM_A) / PARAM_B + YEAR_START)
+}
+
 function update() {
+    // console.log("Update!");
     const level = document.querySelector('#sea-level').value;
     const output = document.querySelector('.sea-level-output');
     const highlight = document.querySelector('#highlight-submerged').checked;
+    const mapTitle = document.querySelector('#map-title');
 
     output.textContent = level + " meter(s)";
+    mapTitle.textContent = "San Francisco Bay Area in year " + getApproximateYear(level);
 
     if (canvas.getContext) {
         const ctx = canvas.getContext('2d');
@@ -53,10 +72,14 @@ function update() {
             }
             ctx.putImageData(imageData, 0, 0);
         } else {
-            // TODO: display loading...
-            // Fill background black
-            ctx.fillStyle = 'rgb(0, 0, 0)';
+            // Fill background black and display loading
+            ctx.fillStyle = 'black';
             ctx.fillRect(0, 0, width, height);
+            ctx.font = '70px sans-serif'
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillStyle = 'white';
+            ctx.fillText('Loading...', width / 2, height / 2);
         }
     } // TODO: handle error and print message
 }
@@ -65,14 +88,18 @@ function fetchElevationData() {
     const req = new XMLHttpRequest();
     req.responseType = "arraybuffer";
     req.onload = function(e) {
-        if (req.status === 200) {
-            const arraybuffer = req.response;
-            elevationData = new Uint8Array(arraybuffer);
-            update();
-        } else {
-            // TODO: user friendly error message on canvas
-            console.error("Request failed");
-        }
+        // DEBUG loading page
+        // setTimeout(() => {
+            if (req.status === 200) {
+                const arraybuffer = req.response;
+                elevationData = new Uint8Array(arraybuffer);
+                // console.log("Update due to load!");
+                update();
+            } else {
+                // TODO: user friendly error message on canvas
+                console.error("Request failed");
+            }
+        // }, 10000);
     }
     req.open("GET", "elevation.dat");
     req.send();
@@ -88,9 +115,11 @@ function load() {
 
     const level = document.querySelector('#sea-level');
     level.addEventListener('input', function() {
+        // console.log("Update due to slider!");
         update();
     });
     document.querySelector('#highlight-submerged').addEventListener('click', function() {
+        // console.log("Update due to checkbox click!");
         update();
     })
 

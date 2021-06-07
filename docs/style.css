@@ -18,10 +18,12 @@ body {
     #sea-level {
         width: 300px;
     }
+    h2 {
+        margin-top: 0em;
+    }
 }
 
-#map {
-    margin-top: 10px;
+#map-section {
     margin-right: 20px;
 }
 
